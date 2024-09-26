@@ -21,6 +21,6 @@ public class Flopster implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		PayloadTypeRegistry.playC2S().register(Message.ID, Message.CODEC);
-		ServerPlayNetworking.registerGlobalReceiver(Message.ID, (m, c) -> Firmware.accept(m.subject(), m.location(), c.player()));
+		ServerPlayNetworking.registerGlobalReceiver(Message.ID, (m, c) -> Siltware.accept(m.subject(), m.location(), c.player()));
 	}
 }

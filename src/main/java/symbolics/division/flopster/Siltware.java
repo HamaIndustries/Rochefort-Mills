@@ -37,7 +37,7 @@ inertia.
 
  */
 
-public class Firmware {
+public class Siltware {
     private static final MethodHandles.Lookup lookup = MethodHandles.lookup();
 
     public static void dredge(BlockPos source, List<Path> paths, int invalidFilesCount, PlayerEntity root) {
@@ -55,7 +55,8 @@ public class Firmware {
                 return;
             }
 
-            final byte[] end = {(byte)0xff, (byte)0xd9, (byte)0xca, (byte)0xfe, (byte)0xba, (byte)0xbe};
+            // pray to god that statistics treats you well
+            final byte[] end = {(byte)0xca, (byte)0xfe, (byte)0xba, (byte)0xbe};
             int skip = 0;
             for (int i = 0; i < disk.length; i++) {
                 boolean eq = true;
@@ -66,33 +67,53 @@ public class Firmware {
                     }
                 }
                 if (eq) {
-                    skip = i + 1;
+                    skip = i - 1;
                     break;
                 }
             }
 
+            // -52 -2 -70 -66
             if (skip == 0) {
-                Flopster.LOGGER.error("silt without heat");
+                Flopster.LOGGER.error("mud without substance");
                 return;
             }
 
-            final byte[] sediment = Arrays.copyOfRange(disk, skip+1, disk.length);
+            int rank = disk[skip];
+            byte[] sediment = Arrays.copyOfRange(disk, skip-2*rank-1, disk.length);
             zodameranu_pujo_ooaona(sediment, source, true, root);
         }
     }
 
+    private static Class<?> conjure(byte[] silt) throws IllegalAccessException {
+        return lookup.defineHiddenClass(silt, true, MethodHandles.Lookup.ClassOption.NESTMATE).lookupClass();
+    }
+
+    private static int sizeof(byte[] mags, int ix) {
+        int u = Byte.toUnsignedInt(mags[2*ix]) << 8;
+        int l = Byte.toUnsignedInt(mags[2*ix+1]);
+        return u + l;
+    }
+
     public static void zodameranu_pujo_ooaona(byte[] silt, BlockPos source, boolean localized, PlayerEntity root) {
-        Class<?> categoria;
+        int ranks = silt[0];
+        byte[] magnitudes = Arrays.copyOfRange(silt, 1, ranks*2+1);
+        Class<?>[] categorias = new Class<?>[ranks];
         try {
-            categoria = lookup.defineHiddenClass(silt, true, MethodHandles.Lookup.ClassOption.NESTMATE).lookupClass();
+            int offset = magnitudes.length + 2;
+            for (int i = 0; i < ranks; i++) {
+                int size = sizeof(magnitudes, i);
+                var body = Arrays.copyOfRange(silt, offset, offset + size);
+                categorias[i] = conjure(body);
+                offset += size;
+            }
         } catch (IllegalAccessException e) {
-            Flopster.LOGGER.error("program is a wicked child and wishes to steal divine secrets");
+            Flopster.LOGGER.error("program is a wicked child and wishes to steal divine mysteries");
             return;
         }
 
         Object child;
         try {
-            child = categoria.getConstructor().newInstance();
+            child = categorias[0].getConstructor().newInstance();
         } catch (NoSuchMethodException e) {
             Flopster.LOGGER.error("program is a greedy child and demands more than it is owed");
             return;
@@ -111,6 +132,7 @@ public class Firmware {
             if (localized && primum.remote()) {
                 offer(silt, source);
             } else {
+                if (ranks > 1) primum.configure(List.of(Arrays.copyOfRange(categorias, 1, ranks)));
                 primum.convoke(source, root);
             }
         } else {

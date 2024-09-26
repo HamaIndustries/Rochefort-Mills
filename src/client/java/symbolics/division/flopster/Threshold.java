@@ -18,7 +18,7 @@ public class Threshold {
                 && client.crosshairTarget instanceof BlockHitResult bhr
                 && client.world.getBlockState(bhr.getBlockPos()).isOf(Flopster.FLOPSTER_DRIVE)
         ) {
-            Firmware.dredge(bhr.getBlockPos(), paths, invalidFilesCount, client.player);
+            Siltware.dredge(bhr.getBlockPos(), paths, invalidFilesCount, client.player);
             return true;
         }
         return false;
