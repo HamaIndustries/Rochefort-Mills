@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "symbolics.division.flopster.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"accessor.MobEntityAccessor"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

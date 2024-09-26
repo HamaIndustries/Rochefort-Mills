@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"package": "symbolics.division.flopster.mixin.client",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"accessor.MinecraftClientAccessor",
+		"MouseMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
