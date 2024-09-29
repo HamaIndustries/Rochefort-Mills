@@ -1,5 +1,7 @@
-This folder contains the source code used for compiling FOXTROT.jpg.
-Compile it using the command:
+FLOPSTER Disks contain Siltware, raw bytecode dredged from the sacred 
+waters of the JPEG and purified into hidden classes.
+
+This folder contains the source code used for compiling FOXTROT.jpg using the command:
 
 `python3 make.py floppy.jpg FoxTrotProgram.class FOXTROT.jpg SinisterFox.class SinisterGoal.class`
 
